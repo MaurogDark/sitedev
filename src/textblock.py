@@ -29,7 +29,7 @@ def check_hashes(text):
 def check_quotes(text):
 	lines = text.split("\n")
 	for line in lines:
-		if len(line) < 2 or line[0:2] != "> ":
+		if len(line) < 1 or line[0:1] != ">":
 			return False
 	return True
 		
@@ -103,7 +103,8 @@ def block_to_html_node(block):
 		for line in block.split("\n"):
 			if len(quote):
 				quote += "\n"
-			quote += line[2:]
+			if len(line) > 2:
+				quote += line[2:]
 		return ParentNode("blockquote", text_to_html_nodes(quote))
 	elif type == BlockType.UNORDERED_LIST:
 		children = []
@@ -114,7 +115,7 @@ def block_to_html_node(block):
 		children = []
 		for line in block.split("\n"):
 			dot_index = line.find(".")
-			children.append(ParentNode("li", text_to_html_nodes(line[dot_index+2:])))
+			children.append(ParentNode("li", text_to_html_nodes(line[dot_index+1:])))
 		return ParentNode("ol", children)
 	return HTMLNode("p", None, text_to_html_nodes(block), None )
 		
