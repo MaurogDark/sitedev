@@ -29,9 +29,10 @@ def generate_page(basepath, from_path, template_path, dest_path):
 	content_stitch = template.split("{{ Content }}")
 	if len(content_stitch) != 2:
 		raise("Template missing {{ Content }} placeholder!")
-	content = repr(html).replace("href=\"/", "href=\"" + basepath)
-	content = content.replace("src=\"/", "src=\"" + basepath)
+	content = repr(html)
 	template = content_stitch[0] + content + content_stitch[1]
+	template = template.replace("href=\"/", "href=\"" + basepath)
+	template = template.replace("src=\"/", "src=\"" + basepath)
 	
 	dir = os.path.dirname(dest_path)
 	if not os.path.exists(dir) or not os.path.isdir(dir):
