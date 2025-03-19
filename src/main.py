@@ -16,6 +16,11 @@ def copy_files(source, target):
 			for child in children:
 				copy_files(os.path.join(source, child), os.path.join(target, child))
 
+def relink_to_base(content, basepath):
+	content = content.replace("href=\"/", "href=\"" + basepath)
+	content = content.replace("src=\"/", "src=\"" + basepath)
+	return content
+
 def generate_page(basepath, from_path, template_path, dest_path):
 	print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 	markdown = open(from_path).read()
@@ -25,14 +30,12 @@ def generate_page(basepath, from_path, template_path, dest_path):
 	title_stitch = template.split("{{ Title }}")
 	if len(title_stitch) != 2:
 		raise("Template missing {{ Title }} placeholder!")
-	template = title_stitch[0] + title + title_stitch[1]
+	template = relink_to_base(title_stitch[0], basepath) + relink_to_base(title, basepath) + relink_to_base(title_stitch[1], basepath)
 	content_stitch = template.split("{{ Content }}")
 	if len(content_stitch) != 2:
 		raise("Template missing {{ Content }} placeholder!")
-	content = repr(html)
-	template = content_stitch[0] + content + content_stitch[1]
-	template = template.replace("href=\"/", "href=\"" + basepath)
-	template = template.replace("src=\"/", "src=\"" + basepath)
+	
+	template = relink_to_base(content_stitch[0], basepath) + relink_to_base(repr(html), basepath) + relink_to_base(content_stitch[1], basepath)
 	
 	dir = os.path.dirname(dest_path)
 	if not os.path.exists(dir) or not os.path.isdir(dir):
