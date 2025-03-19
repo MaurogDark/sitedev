@@ -30,12 +30,13 @@ def generate_page(basepath, from_path, template_path, dest_path):
 	title_stitch = template.split("{{ Title }}")
 	if len(title_stitch) != 2:
 		raise("Template missing {{ Title }} placeholder!")
-	template = relink_to_base(title_stitch[0], basepath) + relink_to_base(title, basepath) + relink_to_base(title_stitch[1], basepath)
+	template = title_stitch[0] + title + title_stitch[1]
 	content_stitch = template.split("{{ Content }}")
 	if len(content_stitch) != 2:
 		raise("Template missing {{ Content }} placeholder!")
 	
-	template = relink_to_base(content_stitch[0], basepath) + relink_to_base(repr(html), basepath) + relink_to_base(content_stitch[1], basepath)
+	template = content_stitch[0] + repr(html) + content_stitch[1]
+	template = relink_to_base(template, basepath)
 	
 	dir = os.path.dirname(dest_path)
 	if not os.path.exists(dir) or not os.path.isdir(dir):
