@@ -95,7 +95,7 @@ of code```
 > A quote
 """
     html = markdown_to_html_node(text)
-    expected = "<div><h1>This is a heading</h1><p>This is a paragraph of text. It has some <b>bold</b> and <i>italic</i> words inside of it.</p><ul><li>This is the first list item in a list block</li><li>This is a list item</li><li>This is another list item</li></ul><pre><code>This is\na bunch\nof code</code></pre><ol><li> This is</li><li> An ordered</li><li> List</li></ol><blockquote>This is\nA quote</blockquote></div>"
+    expected = "<div><h1>This is a heading</h1><p>This is a paragraph of text. It has some <b>bold</b> and <i>italic</i> words inside of it.</p><ul><li>This is the first list item in a list block</li><li>This is a list item</li><li>This is another list item</li></ul><pre><code>This is\na bunch\nof code</code></pre><ol><li>This is</li><li>An ordered</li><li>List</li></ol><blockquote>This is\nA quote</blockquote></div>"
     self.assertEqual(repr(html), expected)
 
   def test_extract_title(self):

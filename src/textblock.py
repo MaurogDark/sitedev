@@ -115,7 +115,7 @@ def block_to_html_node(block):
 		children = []
 		for line in block.split("\n"):
 			dot_index = line.find(".")
-			children.append(ParentNode("li", text_to_html_nodes(line[dot_index+1:])))
+			children.append(ParentNode("li", text_to_html_nodes(line[dot_index+2:])))
 		return ParentNode("ol", children)
 	return HTMLNode("p", None, text_to_html_nodes(block), None )
 		
